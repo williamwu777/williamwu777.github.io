@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 3 - Responsive Web Design</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">My Website</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="lab2.html">Lab 2</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="lab3.html">Lab 3</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Jumbotron with title and subheader -->
+    <div class="container mt-4">
+        <div class="p-5 mb-4 bg-light rounded-3">
+            <div class="container-fluid py-5">
+                <h1 class="display-5 fw-bold">Responsive Web Design</h1>
+                <p class="col-md-8 fs-4">Using Bootstrap for Mobile-First Development</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <!-- List and paragraph column -->
+            <div class="col-md-8">
+                <h2>About Responsive Design</h2>
+                <p>
+                    Responsive web design is an approach to web design that makes web pages render well on a variety of devices and window or screen sizes. It involves using HTML and CSS to automatically resize, hide, shrink, or enlarge a website to make it look good on all devices (desktops, tablets, and phones).
+                </p>
+                <p>
+                    Bootstrap is a popular CSS framework that simplifies the process of creating responsive websites by providing pre-styled components and a responsive grid system.
+                </p>
+                
+                <h3>Key Benefits of Responsive Design:</h3>
+                <ul>
+                    <li>Improved user experience across devices</li>
+                    <li>Better SEO performance and rankings</li>
+                    <li>Easier maintenance than separate mobile sites</li>
+                    <li>Future-proof for new device sizes</li>
+                </ul>
+            </div>
+            
+            <!-- Image column -->
+            <div class="col-md-4">
+                <img src="https://via.placeholder.com/300" alt="Responsive Web Design" class="img-fluid rounded">
+            </div>
+        </div>
+        
+        <!-- Horizontal rule with author info -->
+        <hr class="my-4">
+        <p class="text-muted">Last updated on February 28, 2025 by Your Name</p>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
