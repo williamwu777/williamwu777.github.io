@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store Order</title>
+    <script>
+        window.onload = function() {
+            alert("Welcome to our store! Ready to take your order.");
+
+            // Get customer information
+            const name = prompt("Please enter your name:");
+            const item = prompt("Please enter the item you want to order:");
+            
+            let quantity;
+            while (true) {
+                quantity = parseInt(prompt("Enter quantity (1-99):"));
+                if (!isNaN(quantity) && quantity >= 1 && quantity <= 99) break;
+                alert("Invalid quantity! Please enter a number between 1 and 99.");
+            }
+
+            // Time-appropriate greeting
+            const date = new Date();
+            const hours = date.getHours();
+            let greeting = "Good ";
+            greeting += hours < 12 ? "Morning" : hours < 18 ? "Afternoon" : "Evening";
+
+            // Calculate arrival date
+            const arrivalDate = new Date();
+            arrivalDate.setDate(arrivalDate.getDate() + 7);
+
+            // Update page content
+            document.getElementById("greeting").innerHTML = 
+                `${greeting} ${name}, Thank you for Ordering!`;
+            document.getElementById("orderDetails").innerHTML = 
+                `Order: ${quantity}x ${item}`;
+            document.getElementById("deliveryDate").innerHTML = 
+                `Expected Arrival: ${arrivalDate.toDateString()}`;
+        };
+    </script>
+</head>
+<body>
+    <h1 id="greeting"></h1>
+    <h2 id="orderDetails"></h2>
+    <h3 id="deliveryDate"></h3>
+</body>
+</html>
