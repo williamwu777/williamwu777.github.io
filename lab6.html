@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Meow-velous Cat Facts</title>
+    <title>Cat Facts</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -91,14 +91,14 @@
 </head>
 <body>
     <div class="container">
-        <h1>🐱 Meow-velous Cat Facts 🐱</h1>
+        <h1>🐱  Cat Facts 🐱</h1>
         
-        <button id="fetchButton">Discover Cat Wisdom</button>
+        <button id="fetchButton">Discover Cat </button>
         
         <div id="loadingIndicator">Fetching cat facts...</div>
         
-        <img id="catImage" src="https://via.placeholder.com/400x300?text=Click+to+Reveal+Cat+Magic" alt="Cat Image">
-        
+        <img src=" https://scontent-lga3-2.cdninstagram.com/v/t51.29350-15/454258322_879154270939247_871997567804731484_n.jpg?stp=dst-jpg_e35_p1080x1080_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE4MDAuc2RyLmYyOTM1MC5kZWZhdWx0X2ltYWdlIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=111&_nc_oc=Q6cZ2QE4_SvlTcUpsGiYADX6UaZKpWb-M8q77JbQi8xS54sYh1u8lqrhQMNyLIyrM8cmkjYFfs3w3Q_qtPSbpdifzQBU&_nc_ohc=GeBSXlsKOs0Q7kNvgG_SKLe&_nc_gid=CN_vzY465tru3Sk1RtfgFg&edm=ANTKIIoBAAAA&ccb=7-5&oh=00_AYHeWIDuau5m4wd1xE7Y21S_zd-01xjvOd47bckV3-NOBQ&oe=67ECF003&_nc_sid=d885a2" alt="art" width="100">
+       
         <table id="factsTable">
             <thead>
                 <tr>
@@ -154,10 +154,10 @@
                 }, 300);
 
                 // Reset button
-                fetchButton.textContent = 'Discover More Cat Wisdom';
+                fetchButton.textContent = 'Discover More Cat';
             } catch (error) {
-                console.error('Error fetching cat facts:', error);
-                alert('Oops! Something went wrong. Are you kitten me? 😺');
+                console.error('Error cat facts:', error);
+                alert('Something wrong. Are you kitten me?');
                 fetchButton.textContent = 'Try Again';
             } finally {
                 // Hide loading indicator
