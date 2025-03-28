@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cat Facts API</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        img {
+            max-width: 100%;
+            max-height: 400px;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cat Facts</h1>
+    <button id="fetchButton">Fetch Cat Facts</button>
+    
+    <img id="catImage" src="https://via.placeholder.com/400x300?text=Cat+Image" alt="Cat Image">
+    
+    <table id="factsTable">
+        <thead>
+            <tr>
+                <th>Fact ID</th>
+                <th>Fact</th>
+            </tr>
+        </thead>
+        <tbody id="factsTableBody">
+            <!-- Facts will be dynamically added here -->
+        </tbody>
+    </table>
+
+    <script>
+        document.getElementById('fetchButton').addEventListener('click', fetchCatFacts);
+
+        async function fetchCatFacts() {
+            try {
+                const response = await fetch('https://brianobruno.github.io/cats.json');
+                const data = await response.json();
+
+                // Sort facts by factId
+                const sortedFacts = data.facts.sort((a, b) => a.factId - b.factId);
+
+                // Clear existing table rows
+                const tableBody = document.getElementById('factsTableBody');
+                tableBody.innerHTML = '';
+
+                // Populate table with sorted facts
+                sortedFacts.forEach(fact => {
+                    const row = tableBody.insertRow();
+                    const cellId = row.insertCell(0);
+                    const cellText = row.insertCell(1);
+                    
+                    cellId.textContent = fact.factId;
+                    cellText.textContent = fact.text;
+                });
+
+                // Update cat image
+                const catImage = document.getElementById('catImage');
+                catImage.src = data.catPhoto;
+            } catch (error) {
+                console.error('Error fetching cat facts:', error);
+                alert('Failed to fetch cat facts. Please try again.');
+            }
+        }
+    </script>
+</body>
+</html>
