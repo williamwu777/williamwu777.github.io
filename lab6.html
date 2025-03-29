@@ -9,6 +9,7 @@
             margin: 0 auto;
             padding: 20px;
             text-align: center;
+            background-color: #f5f5f5;
         }
         button {
             padding: 15px 30px;
@@ -19,6 +20,7 @@
             border-radius: 5px;
             cursor: pointer;
             margin: 20px 0;
+            transition: background 0.3s;
         }
         button:hover {
             background: #45a049;
@@ -27,16 +29,124 @@
             margin: 30px 0;
         }
         .fact-box {
-            background: #f9f9f9;
+            background: white;
             border-left: 5px solid #4CAF50;
             padding: 20px;
             margin: 20px 0;
             text-align: left;
+            border-radius: 0 5px 5px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-        img {
-            max-width: 100%;
+        .cat-image {
+            width: 100%;
+            max-width: 400px;
+            height: 300px;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            margin: 20px auto;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #666;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Cat drawing with CSS */
+        .cat-drawing {
+            position: relative;
+            width: 180px;
+            height: 160px;
+            margin: 0 auto;
+        }
+        .cat-head {
+            width: 100px;
+            height: 80px;
+            background: #808080;
+            border-radius: 50%;
+            position: absolute;
+            top: 40px;
+            left: 40px;
+        }
+        .cat-ear-left, .cat-ear-right {
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-bottom: 30px solid #808080;
+            position: absolute;
+        }
+        .cat-ear-left {
+            top: 20px;
+            left: 30px;
+            transform: rotate(-30deg);
+        }
+        .cat-ear-right {
+            top: 20px;
+            right: 30px;
+            transform: rotate(30deg);
+        }
+        .cat-eye-left, .cat-eye-right {
+            width: 12px;
+            height: 20px;
+            background: #fff;
+            border-radius: 50%;
+            position: absolute;
+            top: 60px;
+        }
+        .cat-eye-left {
+            left: 60px;
+        }
+        .cat-eye-right {
+            right: 60px;
+        }
+        .cat-pupil-left, .cat-pupil-right {
+            width: 6px;
+            height: 12px;
+            background: #000;
+            border-radius: 50%;
+            position: absolute;
+            top: 64px;
+        }
+        .cat-pupil-left {
+            left: 63px;
+        }
+        .cat-pupil-right {
+            right: 63px;
+        }
+        .cat-nose {
+            width: 10px;
+            height: 5px;
+            background: #pink;
+            border-radius: 50%;
+            position: absolute;
+            top: 75px;
+            left: 85px;
+            background: pink;
+        }
+        .cat-mouth {
+            width: 20px;
+            height: 5px;
+            border-radius: 0 0 10px 10px;
+            border-bottom: 2px solid #000;
+            position: absolute;
+            top: 85px;
+            left: 80px;
+        }
+        .cat-whisker-left, .cat-whisker-right {
+            width: 30px;
+            height: 1px;
+            background: #000;
+            position: absolute;
+            top: 80px;
+        }
+        .cat-whisker-left {
+            left: 40px;
+        }
+        .cat-whisker-right {
+            right: 40px;
         }
     </style>
 </head>
@@ -44,12 +154,7 @@
     <h1>😺 Amazing Cat Facts</h1>
     <button onclick="showNextFact()">Discover More Cat Facts</button>
     <div id="content"></div>
-
     <script>
-        
-      <img src="https://scontent-lga3-2.cdninstagram.com/v/t51.29350-15/454258322_879154270939247_871997567804731484_n.jpg?stp=dst-jpg_e35_p1080x1080_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE4MDAuc2RyLmYyOTM1MC5kZWZhdWx0X2ltYWdlIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=111&_nc_oc=Q6cZ2QE4_SvlTcUpsGiYADX6UaZKpWb-M8q77JbQi8xS54sYh1u8lqrhQMNyLIyrM8cmkjYFfs3w3Q_qtPSbpdifzQBU&_nc_ohc=GeBSXlsKOs0Q7kNvgG_SKLe&_nc_gid=CN_vzY465tru3Sk1RtfgFg&edm=ANTKIIoBAAAA&ccb=7-5&oh=00_AYHeWIDuau5m4wd1xE7Y21S_zd-01xjvOd47bckV3-NOBQ&oe=67ECF003&_nc_sid=d885a2" width="50">
-    
-        
         const catFacts = [
             "Cats can jump up to 6 times their height.",
             "A group of cats is called a clowder.",
@@ -62,33 +167,40 @@
             "Cats have whiskers on their legs too.",
             "Cats use their tails for balance."
         ];
-
+        
         let currentFactIndex = 0;
-        const factsPerPage = 1;
-
+        
         function showNextFact() {
             const contentDiv = document.getElementById('content');
-            const startIndex = currentFactIndex % catFacts.length;
+            const factIndex = currentFactIndex % catFacts.length;
             
-           
             const factHTML = `
                 <div class="fact-box">
-                    <h3>Fact #${currentFactIndex + 1}</h3>
-                    <p>${catFacts[startIndex]}</p>
+                    <h3>Fact #${factIndex + 1}</h3>
+                    <p>${catFacts[factIndex]}</p>
                 </div>
-                <img src="${base64Image}" alt="Cute Cat">
+                <div class="cat-image">
+                    <div class="cat-drawing">
+                        <div class="cat-ear-left"></div>
+                        <div class="cat-ear-right"></div>
+                        <div class="cat-head"></div>
+                        <div class="cat-eye-left"></div>
+                        <div class="cat-eye-right"></div>
+                        <div class="cat-pupil-left"></div>
+                        <div class="cat-pupil-right"></div>
+                        <div class="cat-nose"></div>
+                        <div class="cat-mouth"></div>
+                        <div class="cat-whisker-left"></div>
+                        <div class="cat-whisker-right"></div>
+                    </div>
+                </div>
             `;
-
+            
             contentDiv.innerHTML = factHTML;
             currentFactIndex++;
-            
-            
-            if (currentFactIndex >= catFacts.length) {
-                currentFactIndex = 0;
-            }
         }
-
-       
+        
+        // Show first fact on page load
         showNextFact();
     </script>
 </body>
