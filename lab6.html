@@ -46,10 +46,10 @@
     <div id="content"></div>
 
     <script>
-        // Base64 encoded version of your Instagram image to avoid hotlinking issues
-        const base64Image = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/..."; // shortened for example
         
-        // Inline cat facts data
+        const base64Image = "https://scontent-lga3-2.cdninstagram.com/v/t51.29350-15/454258322_879154270939247_871997567804731484_n.jpg?stp=dst-jpg_e35_p1080x1080_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE4MDAuc2RyLmYyOTM1MC5kZWZhdWx0X2ltYWdlIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=111&_nc_oc=Q6cZ2QE4_SvlTcUpsGiYADX6UaZKpWb-M8q77JbQi8xS54sYh1u8lqrhQMNyLIyrM8cmkjYFfs3w3Q_qtPSbpdifzQBU&_nc_ohc=GeBSXlsKOs0Q7kNvgG_SKLe&_nc_gid=CN_vzY465tru3Sk1RtfgFg&edm=ANTKIIoBAAAA&ccb=7-5&oh=00_AYHeWIDuau5m4wd1xE7Y21S_zd-01xjvOd47bckV3-NOBQ&oe=67ECF003&_nc_sid=d885a2"; 
+        
+        
         const catFacts = [
             "Cats can jump up to 6 times their height.",
             "A group of cats is called a clowder.",
@@ -70,7 +70,7 @@
             const contentDiv = document.getElementById('content');
             const startIndex = currentFactIndex % catFacts.length;
             
-            // Create fact box
+           
             const factHTML = `
                 <div class="fact-box">
                     <h3>Fact #${currentFactIndex + 1}</h3>
@@ -82,13 +82,13 @@
             contentDiv.innerHTML = factHTML;
             currentFactIndex++;
             
-            // Reset counter after all facts shown
+            
             if (currentFactIndex >= catFacts.length) {
                 currentFactIndex = 0;
             }
         }
 
-        // Show first fact on initial load
+       
         showNextFact();
     </script>
 </body>
