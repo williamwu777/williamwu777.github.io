@@ -1,207 +1,145 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Cat Facts</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSC 225 Lab 6 - REST API Consumer</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #333;
             text-align: center;
-            background-color: #f5f5f5;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
         }
         button {
-            padding: 15px 30px;
-            font-size: 18px;
-            background: #4CAF50;
+            background-color: #4CAF50;
             color: white;
+            padding: 10px 15px;
             border: none;
-            border-radius: 5px;
+            border-radius: 4px;
             cursor: pointer;
+            font-size: 16px;
             margin: 20px 0;
-            transition: background 0.3s;
         }
         button:hover {
-            background: #45a049;
+            background-color: #45a049;
         }
-        #content {
-            margin: 30px 0;
-        }
-        .fact-box {
-            background: white;
-            border-left: 5px solid #4CAF50;
-            padding: 20px;
+        .image-container {
+            text-align: center;
             margin: 20px 0;
-            text-align: left;
-            border-radius: 0 5px 5px 0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-        .cat-image {
-            width: 100%;
-            max-width: 400px;
-            height: 300px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            margin: 20px auto;
-            background-color: #f0f0f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            color: #666;
-            position: relative;
-            overflow: hidden;
+        img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 5px;
         }
-        
-        /* Cat drawing with CSS */
-        .cat-drawing {
-            position: relative;
-            width: 180px;
-            height: 160px;
-            margin: 0 auto;
-        }
-        .cat-head {
-            width: 100px;
-            height: 80px;
-            background: #808080;
-            border-radius: 50%;
-            position: absolute;
-            top: 40px;
-            left: 40px;
-        }
-        .cat-ear-left, .cat-ear-right {
-            width: 0;
-            height: 0;
-            border-left: 20px solid transparent;
-            border-right: 20px solid transparent;
-            border-bottom: 30px solid #808080;
-            position: absolute;
-        }
-        .cat-ear-left {
-            top: 20px;
-            left: 30px;
-            transform: rotate(-30deg);
-        }
-        .cat-ear-right {
-            top: 20px;
-            right: 30px;
-            transform: rotate(30deg);
-        }
-        .cat-eye-left, .cat-eye-right {
-            width: 12px;
-            height: 20px;
-            background: #fff;
-            border-radius: 50%;
-            position: absolute;
-            top: 60px;
-        }
-        .cat-eye-left {
-            left: 60px;
-        }
-        .cat-eye-right {
-            right: 60px;
-        }
-        .cat-pupil-left, .cat-pupil-right {
-            width: 6px;
-            height: 12px;
-            background: #000;
-            border-radius: 50%;
-            position: absolute;
-            top: 64px;
-        }
-        .cat-pupil-left {
-            left: 63px;
-        }
-        .cat-pupil-right {
-            right: 63px;
-        }
-        .cat-nose {
-            width: 10px;
-            height: 5px;
-            background: #pink;
-            border-radius: 50%;
-            position: absolute;
-            top: 75px;
-            left: 85px;
-            background: pink;
-        }
-        .cat-mouth {
-            width: 20px;
-            height: 5px;
-            border-radius: 0 0 10px 10px;
-            border-bottom: 2px solid #000;
-            position: absolute;
-            top: 85px;
-            left: 80px;
-        }
-        .cat-whisker-left, .cat-whisker-right {
-            width: 30px;
-            height: 1px;
-            background: #000;
-            position: absolute;
-            top: 80px;
-        }
-        .cat-whisker-left {
-            left: 40px;
-        }
-        .cat-whisker-right {
-            right: 40px;
+        #factTable {
+            display: none;
         }
     </style>
 </head>
 <body>
-    <h1>😺 Amazing Cat Facts</h1>
-    <button onclick="showNextFact()">Discover More Cat Facts</button>
-    <div id="content"></div>
+    <h1>Cat Facts API Consumer</h1>
+    
+    <div class="image-container">
+        <h2>Cat Image</h2>
+        <!-- Initial placeholder image -->
+        <img id="catImage" src="https://placekitten.com/400/300" alt="Cat Image">
+    </div>
+    
+    <button id="fetchButton">Fetch Cat Facts</button>
+    
+    <div id="factTable">
+        <h2>Cat Facts</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>factId</th>
+                    <th>fact</th>
+                </tr>
+            </thead>
+            <tbody id="factsTableBody">
+                <!-- Table rows will be inserted here -->
+            </tbody>
+        </table>
+    </div>
+
     <script>
-        const catFacts = [
-            "Cats can jump up to 6 times their height.",
-            "A group of cats is called a clowder.",
-            "Cats have 32 muscles in each ear.",
-            "Cats sleep 70% of their lives.",
-            "Cats have a unique nose print.",
-            "Ancient Egyptians revered cats as sacred animals.",
-            "A cat's purr vibrates at 25-150Hz frequency.",
-            "Cats can make over 100 vocal sounds.",
-            "Cats have whiskers on their legs too.",
-            "Cats use their tails for balance."
-        ];
-        
-        let currentFactIndex = 0;
-        
-        function showNextFact() {
-            const contentDiv = document.getElementById('content');
-            const factIndex = currentFactIndex % catFacts.length;
-            
-            const factHTML = `
-                <div class="fact-box">
-                    <h3>Fact #${factIndex + 1}</h3>
-                    <p>${catFacts[factIndex]}</p>
-                </div>
-                <div class="cat-image">
-                    <div class="cat-drawing">
-                        <div class="cat-ear-left"></div>
-                        <div class="cat-ear-right"></div>
-                        <div class="cat-head"></div>
-                        <div class="cat-eye-left"></div>
-                        <div class="cat-eye-right"></div>
-                        <div class="cat-pupil-left"></div>
-                        <div class="cat-pupil-right"></div>
-                        <div class="cat-nose"></div>
-                        <div class="cat-mouth"></div>
-                        <div class="cat-whisker-left"></div>
-                        <div class="cat-whisker-right"></div>
-                    </div>
-                </div>
-            `;
-            
-            contentDiv.innerHTML = factHTML;
-            currentFactIndex++;
+        document.getElementById('fetchButton').addEventListener('click', fetchCatData);
+
+        function fetchCatData() {
+            fetch('https://brianobruno.github.io/cats.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Sort facts by factId
+                    data.facts.sort((a, b) => a.factId - b.factId);
+                    
+                   
+                    displayFacts(data.facts);
+                    
+                    
+                    updateImage(data.imageUrl);
+                    
+                    
+                    document.getElementById('factTable').style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                    alert('Error fetching data. Please try again.');
+                });
         }
-        
-        // Show first fact on page load
-        showNextFact();
+
+        function displayFacts(facts) {
+            const tableBody = document.getElementById('factsTableBody');
+            
+            tableBody.innerHTML = '';
+            
+            facts.forEach(fact => {
+                const row = document.createElement('tr');
+                
+                const idCell = document.createElement('td');
+                idCell.textContent = fact.factId;
+                
+                const factCell = document.createElement('td');
+                factCell.textContent = fact.fact;
+                
+                row.appendChild(idCell);
+                row.appendChild(factCell);
+                
+                tableBody.appendChild(row);
+            });
+        }
+
+        function updateImage(imageUrl) {
+            const catImage = document.getElementById('catImage');
+            catImage.src = imageUrl;
+        }
     </script>
 </body>
 </html>
