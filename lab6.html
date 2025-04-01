@@ -46,6 +46,7 @@
         .image-container {
             text-align: center;
             margin: 20px 0;
+            display: none; /* Initially hidden */
         }
         img {
             max-width: 100%;
@@ -55,17 +56,16 @@
             padding: 5px;
         }
         #factTable {
-            display: none;
+            display: none; /* Initially hidden */
         }
     </style>
 </head>
 <body>
-    
-    <div class="image-container">
-        
+    <h1>Cat Facts API Consumer</h1>
     
     <button id="fetchButton">Fetch Cat Facts</button>
     
+    <!-- Facts table (initially hidden) -->
     <div id="factTable">
         <h2>Cat Facts</h2>
         <table>
@@ -79,6 +79,12 @@
                 <!-- Table rows will be inserted here -->
             </tbody>
         </table>
+    </div>
+    
+    <!-- Image container (initially hidden) - now positioned after the table -->
+    <div id="imageContainer" class="image-container">
+        <h2>Cat Image</h2>
+        <img id="catImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Cat_August_2010-4.jpg/1200px-Cat_August_2010-4.jpg" alt="Cat Image">
     </div>
 
     <script>
@@ -94,17 +100,12 @@
                 })
                 .then(data => {
                     data.facts.sort((a, b) => a.factId - b.factId);
-                    
-                   
                     displayFacts(data.facts);
-                    
-                    
+                    document.getElementById('factTable').style.display = 'block';
+                    document.getElementById('imageContainer').style.display = 'block';
                     if (data.imageUrl) {
                         updateImage(data.imageUrl);
                     }
-                    
-                    
-                    document.getElementById('factTable').style.display = 'block';
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error);
@@ -114,10 +115,7 @@
 
         function displayFacts(facts) {
             const tableBody = document.getElementById('factsTableBody');
-            
-            
             tableBody.innerHTML = '';
-            
             facts.forEach(fact => {
                 const row = document.createElement('tr');
                 
@@ -133,9 +131,7 @@
                 tableBody.appendChild(row);
             });
         }
-<!-- Initial cat image -->
-        <img id="catImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Cat_August_2010-4.jpg/1200px-Cat_August_2010-4.jpg" alt="Cat Image">
-    </div>
+
         function updateImage(imageUrl) {
             const catImage = document.getElementById('catImage');
             catImage.src = imageUrl;
