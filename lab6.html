@@ -1,52 +1,46 @@
-document.getElementById('fetchButton').addEventListener('click', fetchCatData);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cat Facts</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 10px; border: 1px solid #ddd; }
+        th { background: #f2f2f2; }
+        img { max-width: 300px; margin-top: 20px; display: none; }
+    </style>
+</head>
+<body>
+    <button onclick="fetchData()">Load Cat Facts</button>
+    <table id="factTable" style="display:none;">
+        <thead><tr><th>ID</th><th>Fact</th></tr></thead>
+        <tbody></tbody>
+    </table>
+    <img id="catImage" alt="Cat Image">
 
-async function fetchCatData() {
-    const url = 'https://brianobruno.github.io/cats.json';
-    const options = {
-        method: 'GET'
-    };
-
-    try {
-        const response = await fetch(url, options);
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
+    <script>
+        async function fetchData() {
+            try {
+                const res = await fetch('https://brianobruno.github.io/cats.json');
+                if (!res.ok) throw new Error('Failed to fetch');
+                const data = await res.json();
+                
+                document.querySelector('#factTable tbody').innerHTML = data.facts.map(fact => 
+                    `<tr><td>${fact.factId}</td><td>${fact.text}</td></tr>`
+                ).join('');
+                document.getElementById('factTable').style.display = 'table';
+                
+                if (data.imageUrl) {
+                    const img = document.getElementById('catImage');
+                    img.src = data.imageUrl;
+                    img.style.display = 'block';
+                }
+            } catch (error) {
+                alert('Error loading data');
+            }
         }
-        const result = await response.text();
-        const data = JSON.parse(result);
-        
-        if (data.facts && Array.isArray(data.facts)) {
-            data.facts.sort((a, b) => a.factId - b.factId);
-            displayFacts(data.facts);
-            document.getElementById('factTable').style.display = 'block';
-        }
-
-        if (data.imageUrl) {
-            updateImage(data.imageUrl);
-            document.getElementById('imageContainer').style.display = 'block';
-        }
-    } catch (error) {
-        console.error('Error fetching data:', error);
-        alert('Error fetching data. Please try again.');
-    }
-}
-
-function displayFacts(facts) {
-    const tableBody = document.getElementById('factsTableBody');
-    tableBody.innerHTML = '';
-    facts.forEach(fact => {
-        const row = document.createElement('tr');
-        const idCell = document.createElement('td');
-        idCell.textContent = fact.factId;
-        const factCell = document.createElement('td');
-        factCell.textContent = fact.text;
-        row.appendChild(idCell);
-        row.appendChild(factCell);
-        tableBody.appendChild(row);
-    });
-}
-
-function updateImage(imageUrl) {
-    if (imageUrl) {
-        document.getElementById('catImage').src = imageUrl;
-    }
-}
+    </script>
+</body>
+</html>
