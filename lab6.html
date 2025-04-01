@@ -64,8 +64,8 @@
     
     <div class="image-container">
         <h2>Cat Image</h2>
-        <!-- Initial placeholder image -->
-        <img id="catImage" src="https://placekitten.com/400/300" alt="Cat Image">
+        <!-- Initial cat image -->
+        <img id="catImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Cat_August_2010-4.jpg/1200px-Cat_August_2010-4.jpg" alt="Cat Image">
     </div>
     
     <button id="fetchButton">Fetch Cat Facts</button>
@@ -97,14 +97,15 @@
                     return response.json();
                 })
                 .then(data => {
-                    // Sort facts by factId
                     data.facts.sort((a, b) => a.factId - b.factId);
                     
                    
                     displayFacts(data.facts);
                     
                     
-                    updateImage(data.imageUrl);
+                    if (data.imageUrl) {
+                        updateImage(data.imageUrl);
+                    }
                     
                     
                     document.getElementById('factTable').style.display = 'block';
@@ -118,6 +119,7 @@
         function displayFacts(facts) {
             const tableBody = document.getElementById('factsTableBody');
             
+            
             tableBody.innerHTML = '';
             
             facts.forEach(fact => {
@@ -127,7 +129,7 @@
                 idCell.textContent = fact.factId;
                 
                 const factCell = document.createElement('td');
-                factCell.textContent = fact.fact;
+                factCell.textContent = fact.text;
                 
                 row.appendChild(idCell);
                 row.appendChild(factCell);
