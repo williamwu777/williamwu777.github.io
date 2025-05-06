@@ -1,1 +1,156 @@
 
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全球加密市场总览</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            min-height: 100vh;
+            padding-top: 40px;
+        }
+        .market-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            height: 100%;
+            transition: transform 0.2s;
+        }
+        .market-card:hover {
+            transform: translateY(-5px);
+        }
+        .market-title {
+            font-size: 2.5rem;
+            color: #2563eb;
+            margin-bottom: 40px;
+        }
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin: 15px 0;
+        }
+        .stat-label {
+            font-size: 1.5rem;
+            color: #64748b;
+            margin-bottom: 10px;
+        }
+        .stat-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center market-title">
+            🌍 全球加密市场总览
+        </h1>
+
+        <div class="row g-4">
+            <!-- 活跃市场数量 -->
+            <div class="col-md-6 col-lg-3">
+                <div class="market-card text-center">
+                    <div class="stat-icon">🏪</div>
+                    <div class="stat-label">活跃市场数量</div>
+                    <div class="stat-number">947</div>
+                </div>
+            </div>
+
+            <!-- 市场总市值 -->
+            <div class="col-md-6 col-lg-3">
+                <div class="market-card text-center">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-label">市场总市值 (美元)</div>
+                    <div class="stat-number">$2.35T</div>
+                </div>
+            </div>
+
+            <!-- 24小时成交量 -->
+            <div class="col-md-6 col-lg-3">
+                <div class="market-card text-center">
+                    <div class="stat-icon">🔄</div>
+                    <div class="stat-label">24小时成交量 (美元)</div>
+                    <div class="stat-number">$90.65B</div>
+                </div>
+            </div>
+
+            <!-- 比特币占率 -->
+            <div class="col-md-6 col-lg-3">
+                <div class="market-card text-center">
+                    <div class="stat-icon">₿</div>
+                    <div class="stat-label">比特币占率</div>
+                    <div class="stat-number">46.4%</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 导航按钮 -->
+        <div class="text-center mt-5">
+            <a href="index.html" class="btn btn-primary btn-lg mx-2 px-4">返回首页</a>
+        
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.0.3.min.js"></script>
+</body>
+
+
+<script>
+    //定时请求接口地址为https://api.coinlore.net/api/tickers/返回的data数据嵌套到上面
+
+    function fetchCryptoData() {
+        $.ajax({
+            url: 'https://api.coinlore.net/api/global/',
+            method: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                if (response && response[0]) {
+                    const data = response[0];
+                    
+                    // 格式化数字的函数
+                    function formatNumber(num) {
+                        if (num >= 1e12) {
+                            return (num / 1e12).toFixed(2) + 'T';
+                        } else if (num >= 1e9) {
+                            return (num / 1e9).toFixed(2) + 'B';
+                        } else if (num >= 1e6) {
+                            return (num / 1e6).toFixed(2) + 'M';
+                        }
+                        return num.toLocaleString();
+                    }
+
+                    // 更新活跃市场数量
+                    $('.market-card:eq(0) .stat-number').text(data.active_markets);
+
+                    // 更新市场总市值
+                    const totalMarketCap = formatNumber(parseFloat(data.total_mcap));
+                    $('.market-card:eq(1) .stat-number').text('$' + totalMarketCap);
+
+                    // 更新24小时成交量
+                    const volume24h = formatNumber(parseFloat(data.total_volume));
+                    $('.market-card:eq(2) .stat-number').text('$' + volume24h);
+
+                    // 更新比特币占率
+                    $('.market-card:eq(3) .stat-number').text(data.btc_d + '%');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching market data:', error);
+            }
+        });
+    }
+
+    // 页面加载后立即执行一次
+    $(document).ready(function() {
+        fetchCryptoData();
+        // 每隔 60 秒请求一次
+        setInterval(fetchCryptoData, 2000); // 60秒 = 60000毫秒
+    });
+</script>
+</html>
