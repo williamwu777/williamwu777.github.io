@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Top Cryptocurrencies</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: #f8fafc;
+      padding-top: 30px;
+    }
+    .crypto-card {
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+    .crypto-card:hover {
+      transform: translateY(-4px);
+    }
+    .coin-name {
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+    .coin-price {
+      font-size: 1.2rem;
+      color: #10b981;
+    }
+    .negative {
+      color: #ef4444 !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="text-center mb-4">📈 Top Cryptocurrencies</h1>
+    
+    <!-- Search -->
+    <div class="mb-4">
+      <input type="text" id="search" class="form-control" placeholder="Search by name or symbol...">
+    </div>
+
+    <div class="row" id="crypto-list"></div>
+
+    <!-- Navigation -->
+    <div class="text-center mt-4">
+      <a href="market.html" class="btn btn-secondary">View Global Market Overview</a>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script>
+    let allCoins = [];
+
+    function renderCoins(coins) {
+      const list = $('#crypto-list');
+      list.empty();
+
+      coins.forEach(coin => {
+        const card = $(`
+          <div class="col-md-4 mb-4">
+            <a href="coin.html?id=${coin.id}" class="text-decoration-none text-dark">
+              <div class="crypto-card">
+                <div class="coin-name">${coin.name} (${coin.symbol})</div>
+                <div>Rank: ${coin.rank}</div>
+                <div class="coin-price">$${parseFloat(coin.price_usd).toFixed(2)}</div>
+                <div class="${coin.percent_change_24h < 0 ? 'negative' : ''}">
+                  24h Change: ${coin.percent_change_24h}%
+                </div>
+              </div>
+            </a>
+          </div>
+        `);
+        list.append(card);
+      });
+    }
+
+    function fetchCoins() {
+      $.ajax({
+        url: 'https://api.coinlore.net/api/tickers/',
+        method: 'GET',
+        success: function(data) {
+          allCoins = data.data;
+          renderCoins(allCoins);
+        },
+        error: function() {
+          $('#crypto-list').html('<p class="text-danger text-center">Failed to fetch data.</p>');
+        }
+      });
+    }
+
+    $(document).ready(function() {
+      fetchCoins();
+
+      $('#search').on('input', function() {
+        const value = $(this).val().toLowerCase();
+        const filtered = allCoins.filter(c =>
+          c.name.toLowerCase().includes(value) ||
+          c.symbol.toLowerCase().includes(value)
+        );
+        renderCoins(filtered);
+      });
+    });
+  </script>
+</body>
+</html>
