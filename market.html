@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>全球加密市场总览</title>
+    <title>Global Crypto Market Overview</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -48,50 +48,50 @@
 <body>
     <div class="container">
         <h1 class="text-center market-title">
-            🌍 全球加密市场总览
+            🌍 Global Crypto Market Overview
         </h1>
 
         <div class="row g-4">
-            <!-- 活跃市场数量 -->
+            <!-- Number of active markets -->
             <div class="col-md-6 col-lg-3">
                 <div class="market-card text-center">
                     <div class="stat-icon">🏪</div>
-                    <div class="stat-label">活跃市场数量</div>
+                    <div class="stat-label">Number of active markets</div>
                     <div class="stat-number">947</div>
                 </div>
             </div>
 
-            <!-- 市场总市值 -->
+            <!-- Total market value -->
             <div class="col-md-6 col-lg-3">
                 <div class="market-card text-center">
                     <div class="stat-icon">💰</div>
-                    <div class="stat-label">市场总市值 (美元)</div>
+                    <div class="stat-label">Total market value (USD)</div>
                     <div class="stat-number">$2.35T</div>
                 </div>
             </div>
 
-            <!-- 24小时成交量 -->
+            <!-- 24-hour trading volume -->
             <div class="col-md-6 col-lg-3">
                 <div class="market-card text-center">
                     <div class="stat-icon">🔄</div>
-                    <div class="stat-label">24小时成交量 (美元)</div>
+                    <div class="stat-label">24 hour volume (USD)</div>
                     <div class="stat-number">$90.65B</div>
                 </div>
             </div>
 
-            <!-- 比特币占率 -->
+            <!-- Bitcoin share -->
             <div class="col-md-6 col-lg-3">
                 <div class="market-card text-center">
                     <div class="stat-icon">₿</div>
-                    <div class="stat-label">比特币占率</div>
+                    <div class="stat-label">Bitcoin share</div>
                     <div class="stat-number">46.4%</div>
                 </div>
             </div>
         </div>
 
-        <!-- 导航按钮 -->
+        <!-- Navigation buttons -->
         <div class="text-center mt-5">
-            <a href="index.html" class="btn btn-primary btn-lg mx-2 px-4">返回首页</a>
+            <a href="index.html" class="btn btn-primary btn-lg mx-2 px-4">Back to Home</a>
         
         </div>
     </div>
@@ -102,8 +102,7 @@
 
 
 <script>
-    //定时请求接口地址为https://api.coinlore.net/api/tickers/返回的data数据嵌套到上面
-
+    //The timing request interface address is https://api.coinlore.net/api/tickers/The returned data is nested above
     function fetchCryptoData() {
         $.ajax({
             url: 'https://api.coinlore.net/api/global/',
@@ -113,7 +112,7 @@
                 if (response && response[0]) {
                     const data = response[0];
                     
-                    // 格式化数字的函数
+                    // Functions for formatting numbers
                     function formatNumber(num) {
                         if (num >= 1e12) {
                             return (num / 1e12).toFixed(2) + 'T';
@@ -125,18 +124,18 @@
                         return num.toLocaleString();
                     }
 
-                    // 更新活跃市场数量
+                    // Update the number of active markets
                     $('.market-card:eq(0) .stat-number').text(data.active_markets);
 
-                    // 更新市场总市值
+                    // Update total market value
                     const totalMarketCap = formatNumber(parseFloat(data.total_mcap));
                     $('.market-card:eq(1) .stat-number').text('$' + totalMarketCap);
 
-                    // 更新24小时成交量
+                    // Update 24-hour trading volume
                     const volume24h = formatNumber(parseFloat(data.total_volume));
                     $('.market-card:eq(2) .stat-number').text('$' + volume24h);
 
-                    // 更新比特币占率
+                    // Update Bitcoin share
                     $('.market-card:eq(3) .stat-number').text(data.btc_d + '%');
                 }
             },
@@ -146,11 +145,11 @@
         });
     }
 
-    // 页面加载后立即执行一次
+    // Executed once immediately after the page loads
     $(document).ready(function() {
         fetchCryptoData();
-        // 每隔 60 秒请求一次
-        setInterval(fetchCryptoData, 2000); // 60秒 = 60000毫秒
+        // 60 s
+        setInterval(fetchCryptoData, 2000); // 60s = 60000 ms
     });
 </script>
 </html>
