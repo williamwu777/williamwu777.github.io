@@ -1,1 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitcoin Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            min-height: 100vh;
+            padding-top: 40px;
+        }
+        .crypto-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .crypto-title {
+            font-size: 2.5rem;
+            color: #2563eb;
+            margin-bottom: 30px;
+        }
+        .crypto-price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 20px;
+        }
+        .detail-label {
+            color: #64748b;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        .detail-value {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 20px;
+        }
+        .change-badge {
+            font-size: 1.2rem;
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="crypto-card">
+            <!-- 标题和价格部分 -->
+            <div class="text-center">
+                <h1 class="crypto-title">
+                    <span id="coinSymbol"></span> (<span id="coinName"></span>)
+                </h1>
+                <div class="crypto-price" id="coinPrice"></div>
+                <span class="badge change-badge mb-4" id="priceChange"></span>
+            </div>
 
+            <!-- 详细信息部分 -->
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="mb-4">
+                        <div class="detail-label">Market Cap</div>
+                        <div class="detail-value" id="marketCap"></div>
+                    </div>
+                    <div class="mb-4">
+                        <div class="detail-label">Available Supply</div>
+                        <div class="detail-value" id="availableSupply"></div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-4">
+                        <div class="detail-label">Total Supply</div>
+                        <div class="detail-value" id="totalSupply"></div>
+                    </div>
+                    <div class="mb-4">
+                        <div class="detail-label">Supply Progress</div>
+                        <div class="progress" style="height: 20px;">
+                            <div class="progress-bar bg-primary" role="progressbar" id="supplyProgress">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 导航按钮 -->
+        <div class="text-center mt-4">
+            <a href="index.html" class="btn btn-primary btn-lg mx-2">返回首页</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // 获取URL参数的函数
+        function getUrlParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // 格式化大数字的函数
+        function formatNumber(num) {
+            return new Intl.NumberFormat('en-US').format(num);
+        }
+
+        // 页面加载完成后执行
+        $(document).ready(function() {
+            // 获取URL参数
+            const symbol = getUrlParameter('symbol');
+            const name = getUrlParameter('name');
+            const price = parseFloat(getUrlParameter('price'));
+            const marketcap = parseFloat(getUrlParameter('marketcap'));
+            const supply = parseFloat(getUrlParameter('supply'));
+            const tsupply = parseFloat(getUrlParameter('tsupply'));
+            const change = parseFloat(getUrlParameter('change'));
+
+            // 更新页面内容
+            $('#coinSymbol').text(symbol);
+            $('#coinName').text(name);
+            $('#coinPrice').text('$' + formatNumber(price));
+            
+            // 设置涨跌幅样式和内容
+            const changeElement = $('#priceChange');
+            if (change >= 0) {
+                changeElement.addClass('bg-success').removeClass('bg-danger');
+                changeElement.text(`+${change}% (24h)`);
+            } else {
+                changeElement.addClass('bg-danger').removeClass('bg-success');
+                changeElement.text(`${change}% (24h)`);
+            }
+
+            // 更新市值和供应量
+            $('#marketCap').text('$' + formatNumber(marketcap));
+            $('#availableSupply').text(formatNumber(supply) + ' ' + symbol);
+            $('#totalSupply').text(formatNumber(tsupply) + ' ' + symbol);
+
+            // 计算并更新供应进度
+            const supplyProgress = (supply / tsupply) * 100;
+            $('#supplyProgress')
+                .css('width', supplyProgress + '%')
+                .attr('aria-valuenow', supplyProgress)
+                .text(supplyProgress.toFixed(1) + '%');
+
+            // 更新页面标题
+            document.title = `${name} (${symbol}) Details`;
+        });
+    </script>
+</body>
+</html>
