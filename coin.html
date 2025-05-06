@@ -1,64 +1,87 @@
-<!DOCTYPE html>  
-<html lang="en">  
-<head>  
-  <meta charset="UTF-8" />  
-  <meta name="viewport" content="width=device-width, initial-scale=1" />  
-  <title>Coin Detail</title>  
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />  
-  <style>  
-    body {  
-      background-color: #f0f4f8;  
-      padding-top: 40px;  
-    }  
-    .coin-card {  
-      background: white;  
-      border-radius: 15px;  
-      padding: 30px;  
-      box-shadow: 0 6px 20px rgba(0,0,0,0.1);  
-      max-width: 600px;  
-      margin: auto;  
-    }  
-    .coin-title {  
-      font-size: 2rem;  
-      font-weight: bold;  
-      color: #1e3a8a;  
-      margin-bottom: 20px;  
-    }  
-    .coin-data {  
-      font-size: 1.2rem;  
-      margin-bottom: 10px;  
-    }  
-  </style>  
-</head>  
-<body>  
-  <div class="container">  
-    <div id="coin-container" class="coin-card text-center">  
-      <div class="coin-title">Loading...</div>  
-    </div>  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Coin Detail</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background-color: #f0f4f8;
+      padding-top: 40px;
+    }
+    .coin-card {
+      background: white;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      max-width: 600px;
+      margin: auto;
+    }
+    .coin-title {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #1e3a8a;
+      margin-bottom: 20px;
+    }
+    .coin-data {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="coin-container" class="coin-card text-center">
+      <div class="coin-title">Loading...</div>
+    </div>
 
-    <div class="text-center mt-4">  
-      <a href="lab7.html" class="btn btn-secondary">← Back to List</a>  
-    </div>  
-  </div>  
+    <div class="text-center mt-4">
+      <a href="lab7.html" class="btn btn-secondary">← Back to List</a>
+    </div>
+  </div>
 
-  <script>  
-    function getCoinId() {  
-      const params = new URLSearchParams(window.location.search);  
-      return params.get('id');  
-    }  
+  <script>
+    function getCoinId() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('id');
+    }
 
-    async function fetchCoinDetails(id) {  
-      try {  
-        const response = await fetch(`https://api.coinlore.net/api/ticker/?id=${id}`);  
-        if (!response.ok) throw new Error('Failed to fetch');  
-        const data = await response.json();  
+    async function fetchCoinDetails(id) {
+      try {
+        const response = await fetch(`https://api.coinlore.net/api/ticker/?id=${id}`);
+        if (!response.ok) throw new Error('Failed to fetch');
+        const data = await response.json();
 
-        if(!data || data.length === 0) {  
-          document.getElementById('coin-container').innerHTML = '<p class="text-danger">Coin not found.</p>';  
-          return;  
-        }  
+        if (!data || data.length === 0) {
+          document.getElementById('coin-container').innerHTML = '<p class="text-danger">Coin not found.</p>';
+          return;
+        }
 
-        const coin = data[0];  
-        document.getElementById('coin-container').innerHTML = `  
-          <div class="coin-title">${coin.name} (${coin.symbol})</div>  
-          <
+        const coin = data[0];
+        const price = parseFloat(coin.price_usd).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+        const marketCap = parseFloat(coin.market_cap_usd).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+        const totalSupply = parseFloat(coin.tsupply).toLocaleString();
+        const availableSupply = parseFloat(coin.csupply).toLocaleString();
+        const change = parseFloat(coin.percent_change_24h).toFixed(2);
+        const sign = change >= 0 ? '+' : '';
+
+        document.getElementById('coin-container').innerHTML = `
+          <div class="coin-title">${coin.name} (${coin.symbol})</div>
+          <div class="coin-data">Price USD: ${price}</div>
+          <div class="coin-data">Market Cap: ${marketCap}</div>
+          <div class="coin-data">Available Supply: ${availableSupply} ${coin.symbol}</div>
+          <div class="coin-data">Total Supply: ${totalSupply} ${coin.symbol}</div>
+          <div class="coin-data">24h Change: ${sign}${change}%</div>
+        `;
+      } catch (error) {
+        document.getElementById('coin-container').innerHTML = '<p class="text-danger">Error loading coin data.</p>';
+        console.error(error);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const id = getCoinId();
+      if (id) {
+        fetchCoinDetails
+
