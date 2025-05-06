@@ -3,37 +3,778 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>William Wu's Website</title>
+    <title>Latest Cryptocurrency Prices</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            padding: 20px;
-            background-color: #f4f4f4;
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            color: #2d3748;
+            min-height: 100vh;
         }
-        h1 {
-            color: #333;
+        .crypto-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
-        a {
-            color: #0073e6;
-            text-decoration: none;
+        .table {
+            color: #2d3748;
+        }
+        .table thead th {
+            border-bottom: 2px solid #e2e8f0;
+            color: #64748b;
+            font-weight: 600;
+        }
+        .table td {
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .table-hover tbody tr:hover {
+            background: rgba(247, 250, 252, 0.9);
+        }
+        .crypto-title {
+            color: #2563eb;
+            font-weight: 600;
+        }
+        .price-value {
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            color: #1e293b;
+        }
+        .text-success {
+            color: #059669 !important;
+        }
+        .text-danger {
+            color: #dc2626 !important;
         }
     </style>
 </head>
 <body>
-    <h1>Welcome to William Wu's Website</h1>
-    <h2>CSC-225 Student Working Table</h2>
-    <p>I'm taking a CSC 225 class taught by Briano Bruno.</p>
-    <ul>
-        <li>I have a strong passion for both computer science and art, blending technology with creativity to express myself in unique ways.</li>
-        <li>I have been in the US for 6 years and I enjoy it here.</li>
-        <li>I enjoy creating art, especially sculpture and painting, as a way to express emotions and ideas beyond words.</li>
-    </ul>
-    <h3>My GitHub</h3>
-    <p><a href="https://github.com/williamwu777" target="_blank">Visit My GitHub Profile</a></p>
-    <h3>Favorite Picture</h3>
-    <p>This is a picture I like of art:</p>
-    <img src="https://hypemuseum.jp/cdn/shop/products/Project40_192ef788-01e9-4121-955f-e5ecf3065fde_1200x.jpg?v=1665480432" alt="art" width="100">
-    <p>&copy; 2025 William Wu</p>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="crypto-card">
+                    <h2 class="mb-4 crypto-title">
+                        <span class="text-warning">💰</span> Latest Cryptocurrency Prices
+                    </h2>
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="crypto-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Price (USD)</th>
+                                    <th>Change</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            <!--
+                                <tr>
+                                    <td><strong>Bitcoin</strong></td>
+                                    <td class="price-value">$67,314.56</td>
+                                    <td class="text-success">+2.5%</td>
+                                </tr>
+                                <tr>
+                                    <td>Ethereum</td>
+                                    <td>$3,232.39</td>
+                                    <td class="text-success">+1.8%</td>
+                                </tr>
+                                <tr>
+                                    <td>Tether</td>
+                                    <td>$1.00</td>
+                                    <td>0.0%</td>
+                                </tr>
+                                <tr>
+                                    <td>BNB</td>
+                                    <td>$555.64</td>
+                                    <td class="text-success">+3.6%</td>
+                                </tr>
+                                <tr>
+                                    <td>XRP</td>
+                                    <td>$0.58</td>
+                                    <td class="text-danger">-1.2%</td>
+                                </tr>
+                                <tr>
+                                    <td>USD Coin</td>
+                                    <td>$1.00</td>
+                                    <td>0.0%</td>
+                                </tr>
+                                <tr>
+                                    <td>Cardano</td>
+                                    <td>$0.52</td>
+                                    <td class="text-success">+4.1%</td>
+                                </tr>
+                                <tr>
+                                    <td>Avalanche</td>
+                                    <td>$39.06</td>
+                                    <td class="text-danger">-0.7%</td>
+                                </tr>
+                                <tr>
+                                    <td>Solana</td>
+                                    <td>$162.95</td>
+                                    <td class="text-success">+2.9%</td>
+                                </tr>
+                                <tr>
+                                    <td>TRON</td>
+                                    <td>$0.13</td>
+                                    <td class="text-success">+0.4%</td>
+                                </tr>
+                            -->
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+       
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="crypto-card">
+                    <h2 class="mb-4 crypto-title">
+                        <span class="text-warning">🔌</span> Crypto API Endpoints
+                    </h2>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>API Endpoint</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>/api/global/</code></td>
+                                    <td>Get global crypto statistics, including the total count of coins, overall market capitalization, BTC dominance, total trading volume, ATH market capitalization, and more</td>
+                                </tr>
+                                <tr>
+                                    <td><code>/api/tickers/</code></td>
+                                    <td>Retrieve tick data for multiple crypto coins, sorted by market cap. The data includes details such as name, ID, symbol, price, price change, market cap, volume, and supply for each ticker.</td>
+                                </tr>
+                                <tr>
+                                    <td><code>/api/ticker/{ID}</code></td>
+                                    <td>Retrieve tick data for specific coin, you should pass ID which will be given by /api/tickers/ endpoint, data includes details such as name, ID, symbol, price, price change, market cap, volume, and supply for each ticker.</td>
+                                </tr>
+                                <tr>
+                                    <td><code>/api/coin/markets/?id={ID}</code></td>
+                                    <td>Retrieve top 50 exchanges and markets for specific coin.</td>
+                                </tr>
+                                <tr>
+                                    <td><code>/api/exchanges/</code></td>
+                                    <td>Get all exchanges which is listed on our platform.</td>
+                                </tr>
+                                <tr>
+                                    <td><code>/api/exchange/?id={ID}</code></td>
+                                    <td>Get specific exchange using ID from /api/exchanges/ endpoint, returns exchange info and top 100 pairs.</td>
+                                </tr>
+                                <tr>
+                                    <td><code>/api/coin/social_stats/?id={ID}</code></td>
+                                    <td>Social stats, data from twitter and reddit for specific coin.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+      
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="crypto-card">
+                    <h2 class="mb-4 crypto-title">
+                        <span class="text-warning">📊</span> API Endpoint Documentation
+                    </h2>
+                    <div class="mb-4">
+                        <h4>Global Crypto Data</h4>
+                        <ul class="list-unstyled">
+                            <li><strong>Request Method:</strong> GET</li>
+                            <li><strong>Description:</strong> Information about the crypto market</li>
+                            <li><strong>Request URL:</strong> <a href="https://api.coinlore.net/api/global/" class="text-primary">https://api.coinlore.net/api/global/</a></li>
+                        </ul>
+                        
+                        <h5 class="mt-4">Response:</h5>
+                        <pre class="bg-light p-3 rounded"><code>{
+    "coins_count": 12139,
+    "active_markets": 30628,
+    "total_mcap": 2700118262667.9732,
+    "total_volume": 96000264211.89940,
+    "btc_d": "50.32",
+    "eth_d": "16.58",
+    "mcap_change": "-0.67",
+    "volume_change": "-25.18",
+    "avg_change_percent": "0.12",
+    "volume_ath": 3982412195760,
+    "mcap_ath": 2837015056711
+}</code></pre>
+
+                        <h5 class="mt-4">Response Fields:</h5>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Field</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>coins_count</td>
+                                        <td>Total number of coins available on our platform.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>active_markets</td>
+                                        <td>Total cryptocurrency exchange pairs (markets) which is tracked on coinlore.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>total_mcap</td>
+                                        <td>Total crypto market cap, sum of all coins mcap.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>total_volume</td>
+                                        <td>Total trading volume for last 24h, sum of 24h volume for all crypto coins.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>btc_d</td>
+                                        <td>Dominance of bitcoin mcap</td>
+                                    </tr>
+                                    <tr>
+                                        <td>eth_d</td>
+                                        <td>Dominance of ethereum mcap</td>
+                                    </tr>
+                                    <tr>
+                                        <td>mcap_change</td>
+                                        <td>How mcap changed for last 24h</td>
+                                    </tr>
+                                    <tr>
+                                        <td>volume_change</td>
+                                        <td>How trading volume changed for last 24h</td>
+                                    </tr>
+                                    <tr>
+                                        <td>avg_change_percent</td>
+                                        <td>On average how prices has been changed</td>
+                                    </tr>
+                                    <tr>
+                                        <td>volume_ath</td>
+                                        <td>ATH total trading volume</td>
+                                    </tr>
+                                    <tr>
+                                        <td>mcap_ath</td>
+                                        <td>ATH total marketcap</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="crypto-card">
+                    <h2 class="mb-4 crypto-title">
+                        <span class="text-warning">📈</span> Tickers (All coins)
+                    </h2>
+                    <div class="mb-4">
+                        <ul class="list-unstyled">
+                            <li><strong>Request Method:</strong> GET</li>
+                            <li><strong>Description:</strong> Get data for all coins. The maximum result is 100 coins per request. You should use start and limit parameters.</li>
+                            <li><strong>Request URL:</strong> 
+                                <ul>
+                                    <li><a href="https://api.coinlore.net/api/tickers/" class="text-primary">https://api.coinlore.net/api/tickers/</a></li>
+                                    <li><a href="https://api.coinlore.net/api/tickers/?start=100&limit=100" class="text-primary">https://api.coinlore.net/api/tickers/?start=100&limit=100</a></li>
+                                    <li><a href="https://api.coinlore.net/api/tickers/?start=200&limit=100" class="text-primary">https://api.coinlore.net/api/tickers/?start=200&limit=100</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        
+                        <h5 class="mt-4">Response Fields:</h5>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Field</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>data » id</td>
+                                        <td>ID of cryptocurrency</td>
+                                    </tr>
+                                    <tr>
+                                        <td>data » symbol</td>
+                                        <td>Cryptocurrency Ticker symbol</td>
+                                    </tr>
+                                    <tr>
+                                        <td>data » nameid</td>
+                                        <td>Name slug</td>
+                                    </tr>
+                                    <tr>
+                                        <td>data » name</td>
+                                        <td>Full name of crypto coin</td>
+                                    </tr>
+                                    <tr>
+                                        <td>data » rank</td>
+                                        <td>Rank by marketcap</td>
+                                    </tr>
+                                    <tr>
+                                        <td>data » price_usd</td>
+                                        <td>Price in USD currency</td>
+                                    </tr>
+                                    <tr>
+                                        <td>data » percent_change_24h</td>
+                                        <td>Price change in percent for last 24h</td>
+                                    </tr>
+                                    <tr>
+                                        <td>data » percent_change_1h</td>
+                                        <td>Price change in percent for last 1h</td>
+                                    </tr>
+                                    <tr>
+                                        <td>data » percent_change_7d</td>
+                                        <td>Price change in percent for last 7 days</td>
+                                    </tr>
+                                    <tr>
+                                        <td>data » price_btc</td>
+                                        <td>How much coin costs in BTC</td>
+                                    </tr>
+                                    <tr>
+                                        <td>data » market_cap_usd</td>
+                                        <td>Coin marketcap in USD</td>
+                                    </tr>
+                                    <tr>
+                                        <td>data » volume24</td>
+                                        <td>Trading volume of coin for last 24h in USD</td>
+                                    </tr>
+                                    <tr>
+                                        <td>data » volume24a</td>
+                                        <td>How many coins has been traded</td>
+                                    </tr>
+                                    <tr>
+                                        <td>data » csupply</td>
+                                        <td>Circulating Supply</td>
+                                    </tr>
+                                    <tr>
+                                        <td>data » tsupply</td>
+                                        <td>Total Supply</td>
+                                    </tr>
+                                    <tr>
+                                        <td>data » msupply</td>
+                                        <td>Maximum Supply</td>
+                                    </tr>
+                                    <tr>
+                                        <td>info » coins_num</td>
+                                        <td>Total available coins, can be used to loop through all coins as maximum limit of tickers endpoint is 100 coins.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>info » time</td>
+                                        <td>Timestamp</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+       
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="crypto-card">
+                    <h2 class="mb-4 crypto-title">
+                        <span class="text-warning">🪙</span> Ticker (Specific Coin)
+                    </h2>
+                    <div class="mb-4">
+                        <ul class="list-unstyled">
+                            <li><strong>Request Method:</strong> GET</li>
+                            <li><strong>Description:</strong> To get information for a specific coin, you should pass coin ID (You should use the ID from the tickers endpoint)</li>
+                            <li><strong>Request URL:</strong> 
+                                <ul>
+                                    <li><a href="https://api.coinlore.net/api/ticker/?id=90" class="text-primary">https://api.coinlore.net/api/ticker/?id=90 (BTC)</a></li>
+                                    <li><a href="https://api.coinlore.net/api/ticker/?id=80" class="text-primary">https://api.coinlore.net/api/ticker/?id=80 (ETH)</a></li>
+                                    <li><a href="https://api.coinlore.net/api/ticker/?id=518" class="text-primary">https://api.coinlore.net/api/ticker/?id=518 (BTC and ETH)</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        
+                        <h5 class="mt-4">Response Fields:</h5>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Field</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>id</td>
+                                        <td>ID of cryptocurrency</td>
+                                    </tr>
+                                    <tr>
+                                        <td>symbol</td>
+                                        <td>Ticker symbol for crypto coin</td>
+                                    </tr>
+                                    <tr>
+                                        <td>nameid</td>
+                                        <td>Name slug</td>
+                                    </tr>
+                                    <tr>
+                                        <td>name</td>
+                                        <td>Full name of crypto coin</td>
+                                    </tr>
+                                    <tr>
+                                        <td>rank</td>
+                                        <td>Rank by marketcap</td>
+                                    </tr>
+                                    <tr>
+                                        <td>price_usd</td>
+                                        <td>Price in USD currency</td>
+                                    </tr>
+                                    <tr>
+                                        <td>percent_change_24h</td>
+                                        <td>Price change in percent for last 24h</td>
+                                    </tr>
+                                    <tr>
+                                        <td>percent_change_1h</td>
+                                        <td>Price change in percent for last 1h</td>
+                                    </tr>
+                                    <tr>
+                                        <td>percent_change_7d</td>
+                                        <td>Price change in percent for last 7 days</td>
+                                    </tr>
+                                    <tr>
+                                        <td>price_btc</td>
+                                        <td>How much coin costs in BTC</td>
+                                    </tr>
+                                    <tr>
+                                        <td>market_cap_usd</td>
+                                        <td>Coin marketcap in USD</td>
+                                    </tr>
+                                    <tr>
+                                        <td>volume24</td>
+                                        <td>Trading volume of coin for last 24h in USD</td>
+                                    </tr>
+                                    <tr>
+                                        <td>volume24a</td>
+                                        <td>How many coins has been traded</td>
+                                    </tr>
+                                    <tr>
+                                        <td>csupply</td>
+                                        <td>Circulating Supply</td>
+                                    </tr>
+                                    <tr>
+                                        <td>tsupply</td>
+                                        <td>Total Supply</td>
+                                    </tr>
+                                    <tr>
+                                        <td>msupply</td>
+                                        <td>Maximum Supply</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="crypto-card">
+                    <h2 class="mb-4 crypto-title">
+                        <span class="text-warning">🏦</span> Get Markets For Coin
+                    </h2>
+                    <div class="mb-4">
+                        <ul class="list-unstyled">
+                            <li><strong>Request Method:</strong> GET</li>
+                            <li><strong>Description:</strong> Returns first 50 markets for a specific coin</li>
+                            <li><strong>Request URL:</strong> <a href="https://api.coinlore.net/api/coin/markets/?id=90" class="text-primary">https://api.coinlore.net/api/coin/markets/?id=90</a></li>
+                        </ul>
+                        
+                        <h5 class="mt-4">Response Fields:</h5>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Field</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>name</td>
+                                        <td>Name of crypto exchange</td>
+                                    </tr>
+                                    <tr>
+                                        <td>base</td>
+                                        <td>Base cryptocurrency</td>
+                                    </tr>
+                                    <tr>
+                                        <td>quote</td>
+                                        <td>Quote currency</td>
+                                    </tr>
+                                    <tr>
+                                        <td>price</td>
+                                        <td>Price in Quote</td>
+                                    </tr>
+                                    <tr>
+                                        <td>price_usd</td>
+                                        <td>Price in USD</td>
+                                    </tr>
+                                    <tr>
+                                        <td>volume</td>
+                                        <td>24h coin volume</td>
+                                    </tr>
+                                    <tr>
+                                        <td>volume_usd</td>
+                                        <td>24h trade volume in USD</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="crypto-card">
+                    <h2 class="mb-4 crypto-title">
+                        <span class="text-warning">🏛️</span> All Exchanges
+                    </h2>
+                    <div class="mb-4">
+                        <ul class="list-unstyled">
+                            <li><strong>Request Method:</strong> GET</li>
+                            <li><strong>Description:</strong> Get all exchanges</li>
+                            <li><strong>Request URL:</strong> <a href="https://api.coinlore.net/api/exchanges/" class="text-primary">https://api.coinlore.net/api/exchanges/</a></li>
+                        </ul>
+                        
+                        <h5 class="mt-4">Response Fields:</h5>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Field</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>name</td>
+                                        <td>Name of cryptocurrency exchange</td>
+                                    </tr>
+                                    <tr>
+                                        <td>name_id</td>
+                                        <td>Slug of exchange</td>
+                                    </tr>
+                                    <tr>
+                                        <td>volume_usd</td>
+                                        <td>Total trading volume in USD</td>
+                                    </tr>
+                                    <tr>
+                                        <td>active_pairs</td>
+                                        <td>Total active cryptocurrency pairs, markets for exchange</td>
+                                    </tr>
+                                    <tr>
+                                        <td>url</td>
+                                        <td>Exchange website URL</td>
+                                    </tr>
+                                    <tr>
+                                        <td>country</td>
+                                        <td>Country where exchange is registered</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="crypto-card">
+                    <h2 class="mb-4 crypto-title">
+                        <span class="text-warning">🏛️</span> Fetch Exchange Data
+                    </h2>
+                    <div class="mb-4">
+                        <ul class="list-unstyled">
+                            <li><strong>Request Method:</strong> GET</li>
+                            <li><strong>Description:</strong> Get specific exchange by ID (Returns Top 100 Pairs)</li>
+                            <li><strong>Request URL:</strong> <a href="https://api.coinlore.net/api/exchange/?id=5" class="text-primary">https://api.coinlore.net/api/exchange/?id=5</a></li>
+                        </ul>
+                        
+                        <h5 class="mt-4">Response Fields:</h5>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Field</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>name</td>
+                                        <td>Name of exchange</td>
+                                    </tr>
+                                    <tr>
+                                        <td>date_live</td>
+                                        <td>When exchange started operations</td>
+                                    </tr>
+                                    <tr>
+                                        <td>url</td>
+                                        <td>Exchange website URL</td>
+                                    </tr>
+                                    <tr>
+                                        <td>pairs » base</td>
+                                        <td>Base cryptocurrency</td>
+                                    </tr>
+                                    <tr>
+                                        <td>pairs » quote</td>
+                                        <td>Quote currency</td>
+                                    </tr>
+                                    <tr>
+                                        <td>pairs » volume</td>
+                                        <td>24h trading volume</td>
+                                    </tr>
+                                    <tr>
+                                        <td>pairs » price</td>
+                                        <td>Current trading price</td>
+                                    </tr>
+                                    <tr>
+                                        <td>pairs » price_usd</td>
+                                        <td>Price in USD</td>
+                                    </tr>
+                                    <tr>
+                                        <td>pairs » time</td>
+                                        <td>Last update timestamp</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+       <div class="row mt-4">
+        <div class="col-12">
+            <div class="crypto-card">
+                <h2 class="mb-4 crypto-title">
+                    <span class="text-warning">👥</span> Social Stats
+                </h2>
+                <div class="mb-4">
+                    <ul class="list-unstyled">
+                        <li><strong>Request Method:</strong> GET</li>
+                        <li><strong>Description:</strong> Get social stats for coin</li>
+                        <li><strong>Request URL:</strong> <a href="https://api.coinlore.net/api/coin/social_stats/?id=80" class="text-primary">https://api.coinlore.net/api/coin/social_stats/?id=80</a></li>
+                    </ul>
+
+                    <h5 class="mt-4">Response Fields:</h5>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Field</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>reddit » avg_active_users</td>
+                                    <td>Average active users on Reddit</td>
+                                </tr>
+                                <tr>
+                                    <td>reddit » subscribers</td>
+                                    <td>Number of Reddit subscribers</td>
+                                </tr>
+                                <tr>
+                                    <td>twitter » followers_count</td>
+                                    <td>Number of Twitter followers</td>
+                                </tr>
+                                <tr>
+                                    <td>twitter » status_count</td>
+                                    <td>Number of Twitter status updates</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.0.3.min.js"></script>
+
+   
 </body>
+
+<script>
+    //定时请求接口地址为https://api.coinlore.net/api/tickers/返回的data数据嵌套到上面 Latest Cryptocurrency Prices
+</script>
+
+<script>
+    function fetchCryptoData() {
+        $.ajax({
+            url: 'https://api.coinlore.net/api/tickers/?start=0&limit=10',
+            method: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                const cryptoData = response.data;
+                const tableBody = $('#crypto-table tbody');
+                tableBody.empty(); // 清空旧数据
+
+                if (cryptoData && cryptoData.length > 0) {
+                    $.each(cryptoData, function(index, coin) {
+                        const changeClass = parseFloat(coin.percent_change_24h) >= 0 ? 'text-success' : 'text-danger';
+                        const changeText = parseFloat(coin.percent_change_24h).toFixed(2) + '%';
+
+                        const row = `
+                            <tr>
+                                <td><strong>${coin.name}</strong></td>
+                                <td class="price-value">$${parseFloat(coin.price_usd).toLocaleString()}</td>
+                                <td class="${changeClass}">${changeText}</td>
+                            </tr>
+                        `;
+                        tableBody.append(row);
+                    });
+                } else {
+                    tableBody.append('<tr><td colspan="3" class="text-center">No data available</td></tr>');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching crypto data:', error);
+                $('#crypto-table tbody').html('<tr><td colspan="3" class="text-center text-danger">Failed to load data</td></tr>');
+            }
+        });
+    }
+
+    // 页面加载后立即执行一次
+    $(document).ready(function() {
+        fetchCryptoData();
+        // 每隔 60 秒请求一次
+        setInterval(fetchCryptoData, 5000); // 60秒 = 60000毫秒
+    });
+</script>
+
+
+
 </html>
+
+
